@@ -65,22 +65,6 @@ class Runescape:
             
             
         
-        
-        
-# declase class by giving it a username to track
-levon = Runescape('levonski')
-
-# update latest stats
-levon.update_stats()
-
-# example calls
-print levon.total
-print levon.strength
-print levon.farming
-
-print levon.time_to_99(levon.strength,250000)
-
-        
 
 
 
