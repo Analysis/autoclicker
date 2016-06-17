@@ -11,6 +11,6 @@ while True:
     for acct in accts:
         acct.update_stats()
     
-    current_time = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
+    current_time = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
     print 'Stats have been update: ' + current_time
     time.sleep(3600*4) # 4 hours
