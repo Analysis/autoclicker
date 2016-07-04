@@ -2,7 +2,7 @@ from stats_analyzer import Runescape
 import time, datetime
 
 # This is used to update everyones stats once every 4 hours
-names = ['Levonski']
+names = ['Levonski','Dockweiler40','Fk Anthony', 'IDONTEXIST', 'bongodagod']
 accts = [None] * len(names)
 for i,name in enumerate(names):
     accts[i] = Runescape(name)
