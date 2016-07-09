@@ -20,7 +20,7 @@ except:
 # of the following items. Use the location at the CENTER of the item.
 #
 # logs in bank, knife in inventory, log in inventory, fletch all, bank
-locations = ((369,300),(666,254),(666,290),(338,470),(447,283))
+locations = ((369,300),(666,254),(666,290),(338,470),(472,312))
 
 def get_mouse_loc():
 	# returns current mouse coordinates
@@ -59,7 +59,7 @@ def click_loc((x,y),item=1):
 	elif 2: # clicking fletching icon in chat
 		x_new = random.randint(x-15,x+15)
 		y_new = random.randint(y-10,y+8)
-	elif 3:
+	elif 3: # bank chest
 		x_new = random.randint(x-3,x+3)
 		y_new = random.randint(y-3,y+3)		
 	return (x_new,y_new)
@@ -106,7 +106,7 @@ def main():
 	click(1)
 	# type 54 and hit enter to start
 	random_wait()
-	subprocess.call(['xdotool', 'type', '"54"'])
+	subprocess.call(['xdotool', 'type', '54'])
 	random_wait()
 	subprocess.call(['xdotool', 'key', 'Return'])
 	random_wait()
@@ -131,11 +131,12 @@ def main():
 	move_mouse((c_loc[0],c_loc[1]+70))
 	click(1)
 	# close bank
+	time.sleep(0.1)
 	subprocess.call(['xdotool', 'key', 'Escape'])
 
 def fletch(num_logs=log_arg):
-	num_runs = int(np.ceil(num_logs/27.0))
-	for i in range(0,num_runs):
+	num_runs = int(np.ceil(int(num_logs)/27.0))
+	for i in range(0,int(num_runs)):
 		main()
 if __name__ == "__main__":
 	fletch()
