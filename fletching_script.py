@@ -1,0 +1,143 @@
+import subprocess
+import time
+import random
+import sys
+import numpy as np
+
+#############################
+# Fletching script
+# written by Levon Dovlatyan
+# v0.1 July 3 2016
+#############################
+
+try:
+	log_arg = sys.argv[1]
+except:
+	log_arg = 2**16
+
+# REQUIRED FIELDS
+# use 'xdotool getmouselocation' in terminal to get coordinate locations
+# of the following items. Use the location at the CENTER of the item.
+#
+# logs in bank, knife in inventory, log in inventory, fletch all, bank
+locations = ((369,300),(666,254),(666,290),(338,470),(447,283))
+
+def get_mouse_loc():
+	# returns current mouse coordinates
+	
+	# call xdotool to grab current mouse coordinates
+	loc = subprocess.Popen(["xdotool", "getmouselocation", "--shell"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+	
+	# return x,y coordinates in a list (x,y) after some formatting
+	loc = loc.communicate()[0].split("\n")[0:2]
+	return (int(loc[0][2:]),int(loc[1][2:]))
+	
+def move_mouse(new_loc):
+	# slide mouse to new coordinate location
+	# must give a list = (x,y)
+	
+	# grab current mouse location
+	cur_loc = get_mouse_loc()
+	
+	# grab distances between x & y points
+	x_diff = abs(cur_loc[0] - new_loc[0])
+	y_diff = abs(cur_loc[1] - new_loc[1])
+	largest_diff = x_diff*(x_diff >= y_diff) + y_diff*(x_diff < y_diff)
+	largest_diff = np.round(largest_diff/2.0)
+	
+	# create list of distance points mouse will travel
+	x_range = np.round(np.linspace(cur_loc[0],new_loc[0],largest_diff))
+	y_range = np.round(np.linspace(cur_loc[1],new_loc[1],largest_diff))
+	
+	for x, y in zip(x_range, y_range):
+		subprocess.call(['xdotool', 'mousemove', str(x), str(y)])
+
+def click_loc((x,y),item=1):
+	if 1:
+		x_new = random.randint(x-10,x+10)
+		y_new = random.randint(y-10,y+10)
+	elif 2: # clicking fletching icon in chat
+		x_new = random.randint(x-15,x+15)
+		y_new = random.randint(y-10,y+8)
+	elif 3:
+		x_new = random.randint(x-3,x+3)
+		y_new = random.randint(y-3,y+3)		
+	return (x_new,y_new)
+	
+def click(button=1):
+	# press down on the mouse
+	subprocess.call(["xdotool", "mousedown", str(button)])
+	
+	# sleep for a random interval between 0.05 - 0.2 seconds
+	lower_range = random.randint(50,100)	
+	upper_range = random.randint(150,200)
+	time.sleep(random.randint(lower_range,upper_range) / 1000.0)
+	
+	# release mouse click
+	subprocess.call(["xdotool", "mouseup", str(button)])
+
+def random_wait():
+	time.sleep(random.randint(100,200)/100.0)
+	
+def main():
+
+	#sleep for 3 seconds before starting
+	time.sleep(1)
+	
+	######## use knife on log in inventory
+	# move mouse to knife
+	move_mouse(click_loc(locations[1],1))
+	# left click
+	click(1)
+	# move mouse to logs
+	move_mouse(click_loc(locations[2],1))
+	# left click
+	click(1)
+	# sleep
+	time.sleep(1)
+	
+	######### fletch all
+	# move mouse to fletch option
+	move_mouse(click_loc(locations[3],2))
+	click(3) # right click
+	# move down and click fletch 'x' option
+	c_loc = get_mouse_loc()
+	move_mouse((c_loc[0],c_loc[1]+70))
+	click(1)
+	# type 54 and hit enter to start
+	random_wait()
+	subprocess.call(['xdotool', 'type', '"54"'])
+	random_wait()
+	subprocess.call(['xdotool', 'key', 'Return'])
+	random_wait()
+	# move mouse to bank location and sleep
+	move_mouse(click_loc(locations[4],3))
+	time.sleep(random.randint(5000,5500)/100.0)
+	
+	######### banking
+	# deposit fletched items
+	click(1)
+	random_wait()
+	move_mouse(click_loc(locations[2],1))
+	click(3)
+	# move down and click fletch deposit all option
+	c_loc = get_mouse_loc()
+	move_mouse((c_loc[0],c_loc[1]+70))
+	click(1)
+	# grab new inventory
+	move_mouse(click_loc(locations[0],1))
+	click(3)
+	c_loc = get_mouse_loc()
+	move_mouse((c_loc[0],c_loc[1]+70))
+	click(1)
+	# close bank
+	time.sleep(0.1)
+	subprocess.call(['xdotool', 'key', 'Escape'])
+
+def fletch(num_logs=log_arg):
+	num_runs = int(np.ceil(num_logs/27.0))
+	for i in range(0,num_runs):
+		main()
+if __name__ == "__main__":
+	fletch()
+
