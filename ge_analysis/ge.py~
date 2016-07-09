@@ -8,7 +8,7 @@ import time
 import datetime
 
 # shark, barrow tab, 
-ITEMS = [385,19629,2]
+ITEMS = [385,19629]
 
 all_items = open('items.json')
 all_items = json.load(all_items)
@@ -39,7 +39,7 @@ def grab_data():
 		temp = str(temp[0]) + ',' + str(temp[1]) + ',' + str(temp[2]) + ',' + str(temp[3]) + ',' + str(temp[4] + ',' + str(time.time()) + '\n')
 		a.write(temp)
 		a.close()
-		
+	# try to plot data
 	try:
 		plot_data()
 	except:
@@ -88,5 +88,14 @@ def plot_data():
 		f.autofmt_xdate()
 		plt.savefig('item_' + str(item) + '.png')
     
-grab_data()
+# make html file to display graphs in webpage
+f = open('html_graph.txt','w')
+for item in ITEMS:
+	temp = "<img src=\"item_" + str(item) + ".png\">" + "<br>"
+	f.write(temp)
+f.close()
+
+while True:
+	grab_data()
+	time.sleep(5)
     
