@@ -40,10 +40,10 @@ def grab_data():
 		a.write(temp)
 		a.close()
 	# try to plot data
-	try:
-		plot_data()
-	except:
-		print 'error graphing'
+	#try:
+	plot_data()
+	#except:
+	#	print 'error graphing'
 	
 def plot_data():
 	# plot data

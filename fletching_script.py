@@ -20,7 +20,7 @@ except:
 # of the following items. Use the location at the CENTER of the item.
 #
 # logs in bank, knife in inventory, log in inventory, fletch all, bank
-locations = ((369,300),(666,254),(666,290),(338,470),(473,314))
+locations = ((369,300),(670,254),(666,290),(338,470),(488,312))
 
 def get_mouse_loc():
 	# returns current mouse coordinates
@@ -60,8 +60,8 @@ def click_loc((x,y),item=1):
 		x_new = random.randint(x-15,x+15)
 		y_new = random.randint(y-10,y+8)
 	elif 3: # bank chest
-		x_new = random.randint(x-3,x+3)
-		y_new = random.randint(y-3,y+3)		
+		x_new = random.randint(x-2,x+2)
+		y_new = random.randint(y-2,y+2)		
 	return (x_new,y_new)
 	
 def click(button=1):
@@ -77,7 +77,7 @@ def click(button=1):
 	subprocess.call(["xdotool", "mouseup", str(button)])
 
 def random_wait():
-	time.sleep(random.randint(100,200)/100.0)
+	time.sleep(random.randint(100,150)/100.0)
 	
 def main():
 
@@ -94,7 +94,7 @@ def main():
 	# left click
 	click(1)
 	# sleep
-	time.sleep(1)
+	random_wait()
 	
 	######### fletch all
 	# move mouse to fletch option
