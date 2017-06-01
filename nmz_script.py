@@ -33,7 +33,7 @@ def training(train_time=time_arg):
 		#subprocess.call(["xdotool", "mousemove", str(mouse_X), str(mouse_Y)])
 
 		# press down on the mouse
-		subprocess.call(["xdotool", "mousedown", "1"])
+		subprocess.call(["xdotool", "key", "up"])
 	
 		# sleep for a random interval between 0.1 - 0.5 seconds
 		upper_range = random.randint(300,500)
@@ -41,7 +41,7 @@ def training(train_time=time_arg):
 		time.sleep(random.randint(lower_range,upper_range) / 1000.0)
 	
 		# release mouse click
-		subprocess.call(["xdotool", "mouseup", "1"])
+		subprocess.call(["xdotool", "key", "up"])
 
 		# random delay before next click
 		upper_range = random.randint(400,600)
@@ -49,11 +49,11 @@ def training(train_time=time_arg):
 		time.sleep(random.randint(lower_range,upper_range) / 1000.0)
 
 		# repeat to turn off prayer
-		subprocess.call(["xdotool", "mousedown", "1"])
+		subprocess.call(["xdotool", "key", "up"])
 		upper_range = random.randint(300,500)
 		lower_range = random.randint(100,250)
 		time.sleep(random.randint(lower_range,upper_range) / 1000.0)
-		subprocess.call(["xdotool", "mouseup", "1"])
+		subprocess.call(["xdotool", "key", "up"])
 	
 		#sleep for random interval between 20-55 seconds
 		sleep_time = random.randint(1500,5300)
